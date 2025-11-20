@@ -78,8 +78,8 @@ def find_password():
   
   try:
     messagebox.showinfo(title="", message=f"Email: {data[website]["email"]}\nPassword: {data[website]["password"]}")
-  except KeyError:
-    messagebox.showinfo(title="", message=f"No Data File Found.")
+  except KeyError as key:
+    messagebox.showinfo(title="", message=f"No {key} File Found.")
 
 # --------------------------- UI SETUP ---------------------------- #
 
