@@ -32,7 +32,7 @@ def generate_password():
 
 def save_details():
   """"""
-  website = website_entry.get()
+  website = website_entry.get().title()
   email = email_username_entry.get()
   password = password_entry.get()
   data = {
@@ -67,7 +67,20 @@ def save_details():
 # --------------------------- FIND PASSWORD ---------------------------- #
 
 def find_password():
-  pass
+  """"""
+  website = website_entry.get().title()
+  if not website :
+    messagebox.showinfo(title="Oops", message="Please fill the website field!")
+    return
+  
+  with open("data.json",mode="r") as data_file:
+     data = json.load(data_file)
+  
+  try:
+    messagebox.showinfo(title="", message=f"Email: {data[website]["email"]}\nPassword: {data[website]["password"]}")
+  except KeyError:
+    messagebox.showinfo(title="", message=f"No Data File Found.")
+
 # --------------------------- UI SETUP ---------------------------- #
 
 window = Tk()
@@ -86,7 +99,7 @@ website_entry = Entry()
 website_entry.grid(column=1,row=1)
 website_entry.focus()
 
-search_button = Button(text="Search")
+search_button = Button(text="Search",command=find_password)
 search_button.grid(column=2,row=1)
 
 email_username_label = Label(text="Email/Username:")
