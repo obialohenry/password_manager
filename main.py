@@ -95,11 +95,11 @@ canvas.grid(column=1,row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0,row=1)
 
-website_entry = Entry()
+website_entry = Entry(width=22)
 website_entry.grid(column=1,row=1)
 website_entry.focus()
 
-search_button = Button(text="Search",command=find_password)
+search_button = Button(text="Search",width=13,command=find_password)
 search_button.grid(column=2,row=1)
 
 email_username_label = Label(text="Email/Username:")
