@@ -72,14 +72,16 @@ def find_password():
   if not website :
     messagebox.showinfo(title="Oops", message="Please fill the website field!")
     return
-  
-  with open("data.json",mode="r") as data_file:
-     data = json.load(data_file)
-  
   try:
-    messagebox.showinfo(title="", message=f"Email: {data[website]["email"]}\nPassword: {data[website]["password"]}")
-  except KeyError as key:
-    messagebox.showinfo(title="", message=f"No {key} File Found.")
+    with open("data.json",mode="r") as data_file:
+     data = json.load(data_file)
+  except FileNotFoundError:
+    messagebox.showinfo(title="", message=f"No File Found.")
+  else:
+    try:
+      messagebox.showinfo(title="", message=f"Email: {data[website]["email"]}\nPassword: {data[website]["password"]}")
+    except KeyError as key:
+      messagebox.showinfo(title="", message=f"No {key} File Found.")
 
 # --------------------------- UI SETUP ---------------------------- #
 
