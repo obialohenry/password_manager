@@ -2,6 +2,7 @@ from tkinter import * # type: ignore
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 SPACING = 50
 CANVAS_SIZE = 200
@@ -34,6 +35,12 @@ def save_details():
   website = website_entry.get()
   email = email_username_entry.get()
   password = password_entry.get()
+  data = {
+    website:{
+      "email": email,
+      "password": password
+    }
+  }
 
   if not website or not password:
     messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
@@ -44,11 +51,19 @@ def save_details():
   if not is_ok:
     return
 
-  with open("data.txt",mode="a") as data:
-    data.write(f"{website} | {email} | {password}\n") 
-
-  website_entry.delete(0,END)
-  password_entry.delete(0,END)
+  try:
+    with open("data.json",mode="r") as data_file:
+     new_data = json.load(data_file)
+  except FileNotFoundError:
+    with open("data.json",mode="w") as data_file:
+      json.dump(data,data_file,indent=4)
+  else:
+    new_data.update(data)
+    with open("data.json",mode="w") as data_file:
+      json.dump(new_data, data_file, indent=4)
+  finally:
+    website_entry.delete(0,END)
+    password_entry.delete(0,END)
 
 # --------------------------- UI SETUP ---------------------------- #
 
